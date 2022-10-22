@@ -1,59 +1,128 @@
+//PLANNING AHEAD SO I DONT GET CONFUSED//
+//use moment() to add time at top in jumbotron
+//add time blocks through jquery 
+    //3 columns for time, input, and button
+    //append all DOM elements
+    //9 rows for 9am-5pm
+//color code time blocks: past(grey), current(red), future(green)
+    //do I use moment to color code?...overthinking?
+    //have current time be equal, lesser or more than the moment value through conditional statements 
+    //set attribute according to time 
+//functionality: 
+    //want user inputs to schedule appts throughout the day
+    //user hits save button to store text in input
+    //use local storage 
+
+//---GLOBAL VARIABLES---//
 //timestamp variable, will adjust to just include month, day
 var currentDay = moment();
-$('#currentDay').text(currentDay.format('LLLL'));
+$('#currentDay').text(currentDay.format('dddd, MMMM Do'));
 
-// var present = moment();
+var presentHour = moment().hour();
+//object array of times linked to moment to trigger color coding if statements later
+var hours = [
+   moment().hour(9).format("hA"),
+   moment().hour(10).format("hA"),
+   moment().hour(11).format("hA"),
+   moment().hour(12).format("hA"),
+   moment().hour(13).format("hA"),
+   moment().hour(14).format("hA"),
+   moment().hour(15).format("hA"),
+   moment().hour(16).format("hA"),
+   moment().hour(17).format("hA"),
+];
 
-//hours not defined? maybe jquery is not linked
-var eventListEl = document.querySelector(".eventList");
-var hoursListEl = document.querySelector("#hours");
 
-//event list variables
-var eventListEl = $('eventList');
+//targets element that will hold the user input 
+var containerEl = $('.container');
 
-//function to render the hours list
+//---FUNCTION---//
+    //function to render the hours list, timeblocks for each hour
+    //<div class="row time-block">
+        //<li class=hour list-grou>
+        //<input class=description>
+        //<button class=saveBtn>
+//---FUNCTION THAT WILL DYNAMICALLY CREATE THE DOM ELEMENTS REQUIRED---//
 function renderHours() {
-    var hours = [
-        '9am',
-        '10am',
-        '11am',
-        '12pm',
-        '1pm',
-        '2pm',
-        '3pm',
-        '4pm',
-        '5pm',
-    ]
-    //moment time frame here? 
-    for (var i = 0; i < hours.length; i++) {
-        //create list of hours
-        var hoursList = $("<li>");
-        //assing style to list
-        hoursList.addClass('list-group list-group-flush');
-        // // //setting data attributes to hours
-        // hoursList.attr('data-time', hours[i]);
-        // //rendering text for each list
-        hoursList.text(hours[i]);
-        // //appending list to hours list element on html
-        hoursListEl.append(hoursList);
-        // hours.ListEl.show(); 
-        // // hoursListEl.show();
-    }
-};
+//create element for timeBlocks using for loop to link hours to each div 
+for (var i = 0; i < hours.length; i++) {
+    //creating a div to arrange elements 
+    var timeBlockEl = $("<ol>");
+    //---.row hinted in css, used bootstrap for list style
+    timeBlockEl.addClass = ('row time-block');
+    timeBlockEl.attr = ({
+        // id:"row-" + (i + 9)
+    })
+    // console.log(timeBlockEl);
+//----------list of hours---------//
+    //| col-1 |       col-10        | col-1 |
+    var timeBlockHour = $("<li>");
+    timeBlockHour.addClass = ('col-1 hours');
+    timeBlockHour.text = (hours[i]);
+    timeBlockHour.attr = ({
+        id: i + 9 
+    });
+//--------event inputs----------//
+    // console.log(timeBlockHour);
+    var inputContainer = ("<div>");
+    
+    var eventInput = $("<input>");
+    eventInput.addClass = ("col-10 description");
+    eventInput.attr = ({
+        id: "event-"+ (i + 9),
+        type: "text"
+    });
+    // console.log(eventInput);
 
-renderHours();
+    var saveBtnEl = $("<button>");
+    saveBtnEl.addClass = ("col-1 saveBtn");
+    saveBtnEl.attr = ({
+        id:"save-button-" + (i + 9),
+        type: "button"
+    });
+    //almost forgot the icon
+    var lockSave = $("<i>");
+    lockSave.addClass = ("fa-solid fa-thumbtack");
+    //--sorry i wanted a thumbtack instead
+
+    containerEl.append (
+        timeBlockEl,
+        timeBlockHour,
+        inputContainer,
+        eventInput,
+        saveBtnEl,
+        lockSave, 
+    );
+
+    };
 
 function eventInputs() {
-    //is input group defined? 
-    hoursListEl.append(eventListEl);
+    var currentTime = moment("123", "hmm").format("HH:mm");
+    // console.log(currentTime);
 
-    //include moment here that will change time 
-
+//----CONDITIONAL STATEMENTS THAT COLORCODE EVENTS-----//
+    
+    if (currentTime !== hours) {
+        eventInput.addClass = (".past");
+    } 
+    if (currentTime == hours) {
+        eventInput.addClass = (".present");
+    }
+    if (currentTime > hours ) {
+        eventInput.addClass = (".future");
+    }
     //set different color attributes here according to the time change
 };
 
-
-function storeInputInfo() {
-    //input storage
+function saveInputs () {
+    inputContainer.localStorage.setItem("events", JSON.stringify(eventInput));
+    inputContainer.localSTorage.getItem(eventInput);
 };
+
+};
+
+
+// function storeInputInfo() {
+//     //input storage
+// };
 
