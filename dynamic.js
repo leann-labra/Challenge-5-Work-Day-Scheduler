@@ -57,7 +57,7 @@ function renderHours() {
     //----------list of hours---------//
     //| col-1 |       col-10        | col-1 |
     var timeBlockHour = $("<p>");
-    timeBlockHour.addClass("col-1 hours");
+    timeBlockHour.addClass("col-1 hours float-end p-1");
     timeBlockHour.text(hours[i]);
     timeBlockHour.attr({
       id: i + 9,
