@@ -18,7 +18,6 @@
 var currentDay = moment();
 $("#currentDay").text(currentDay.format("dddd, MMMM Do"));
 
-var presentHour = moment().hour();
 //object array of times linked to moment to trigger color coding if statements later
 var hours = [
   moment().hour(9).format("hA"),
@@ -35,12 +34,8 @@ var hours = [
 //targets element that will hold the user input
 var containerEl = $(".container");
 
-//---FUNCTION---//
-//function to render the hours list, timeblocks for each hour
-//<div class="row time-block">
-//<li class=hour list-grou>
-//<input class=description>
-//<button class=saveBtn>
+//------------------------------------FUNCTIONS------------------------------------------//
+
 //---FUNCTION THAT WILL DYNAMICALLY CREATE THE DOM ELEMENTS REQUIRED---//
 function renderHours() {
   //create element for timeBlocks using for loop to link hours to each div
@@ -89,11 +84,11 @@ function renderHours() {
       id: "save-button-" + (i + 9),
       type: "button",
     });
-    //almost forgot the icon
+    
     var lockSave = $("<i>");
     lockSave.addClass("fa-solid fa-thumbtack");
     saveBtnEl.append(lockSave);
-    //--sorry i wanted a thumbtack instead
+    
 
     timeBlockEl.append(timeBlockHour, eventInput, saveBtnEl);
     containerEl.append(timeBlockEl);
@@ -123,7 +118,7 @@ function eventInputs() {
       rows[i].addClass(".future");
     }
   }
-  //set different color attributes here according to the time change
+ 
 }
 
 function saveInputs(key, text) {
